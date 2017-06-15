@@ -17,7 +17,7 @@ std_length=250
 #Generating Random Samples
 import string
 import random
-potential_chars=string.ascii_uppercase+string.ascii_lowercase+'.,;()!?:'
+potential_chars=string.printable
 
 def add_random_text_samples(num=1,length=std_length):
 	"""
@@ -95,6 +95,7 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 
 	if args.files: text_files = args.files
+	print(text_files)
 
 	if args.clear:
 		clear_all_samples()

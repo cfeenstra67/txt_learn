@@ -12,7 +12,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neural_network import MLPClassifier
 
 #Utility Functions
-from crypto import m_gen
+def m_gen(*args, fn):
+	for arg in args: yield fn(arg)
 def wrap_str(text,wrapper='`'): return ''.join((wrapper,text,wrapper))
 def unwrap_str(text): return text[1:-1]
 def bounded(num, lower=0, upper=1): return min(upper, max(lower, num))
@@ -108,7 +109,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-t', '--test', action='store_true', help='test model with trained data')
 	parser.add_argument('-i', '--interactive', action='store_true', help='open shell which allows you to predict probabilities of strings being English text')
-	parser.add_argument('-r', '--retrieve-model', nargs='?', default=MODEL_DEST action='store_true', help='instead of training model using pickled dataframe, simply retrieve the currently saved model.')
+	parser.add_argument('-r', '--retrieve-model', action='store_true', help='instead of training model using pickled dataframe, simply retrieve the currently saved model.')
 	gen_def_arg='T'
 	parser.add_argument('-g', '--gen-data', nargs='?', default=gen_def_arg, help='generates data before program executes using data_generator.py.  Takes a string of one-letter command line arguments w/o hyphens followed by commas to pass to data_generator. Ex: -g q,c')
 
@@ -124,6 +125,3 @@ if __name__ == '__main__':
 	else: mod = create_model(X, y) 
 	if args.test: run_test(X, y, mod)
 	if args.interactive: run_interactive(mod)
-
-
-
